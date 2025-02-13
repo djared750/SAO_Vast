@@ -3,11 +3,13 @@ import json
 import os
 import sys
 
+import huggingface_hub
 import soundfile as sf
 import torch
 from diffusers import StableAudioPipeline
 
 # Setup
+huggingface_hub.login(os.environ.get("HUGGINGFACE_TOKEN"))
 PROMPTFILE = sys.argv[1]
 OUTPUTS_FOLDER = os.environ.get("SAO_OUTPUTS_FOLDER")
 PIPE = StableAudioPipeline.from_pretrained(

@@ -10,6 +10,7 @@ set -eo pipefail
 pip install https://github.com/vBaiCai/python-pesq/archive/master.zip
 pip install torch torchaudio einops soundfile torchsde transformers diffusers
 pip install stable-audio-tools
+pip install huggingface-hub
 
 # Download some useful files
 mkdir -p "${WORKSPACE}/SAO/outputs"

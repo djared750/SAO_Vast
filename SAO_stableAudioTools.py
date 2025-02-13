@@ -1,12 +1,14 @@
 import os
 import sys
 
+import huggingface_hub
 import torch
 import torchaudio
 from einops import rearrange
 from stable_audio_tools import get_pretrained_model
 from stable_audio_tools.inference.generation import generate_diffusion_cond
 
+huggingface_hub.login(os.environ.get("HUGGINGFACE_TOKEN"))
 PROMPTFILE = sys.argv[1]
 OUTPUTS_FOLDER = os.environ.get("SAO_OUTPUTS_FOLDER")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
