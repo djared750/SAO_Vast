@@ -7,6 +7,7 @@ set -eo pipefail
 . /venv/main/bin/activate
 
 # Install your packages
+apt install neovim
 pip install https://github.com/vBaiCai/python-pesq/archive/master.zip
 pip install torch torchaudio einops soundfile torchsde transformers diffusers
 pip install stable-audio-tools
