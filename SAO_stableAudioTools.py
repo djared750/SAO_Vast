@@ -1,3 +1,4 @@
+import os
 import sys
 
 import torch
@@ -7,11 +8,17 @@ from stable_audio_tools import get_pretrained_model
 from stable_audio_tools.inference.generation import generate_diffusion_cond
 
 PROMPTFILE = sys.argv[1]
+OUTPUTS_FOLDER = os.environ.get("SAO_OUTPUTS_FOLDER")
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MODEL, MODEL_CONFIG = get_pretrained_model("stabilityai/stable-audio-open-1.0")
 SAMPLE_RATE = MODEL_CONFIG["sample_rate"]
 SAMPLE_SIZE = MODEL_CONFIG["sample_size"]
-SAO = MODEL.to(DEVICE)
+
+try:
+    SAO = MODEL.to(DEVICE)
+except:
+    print("Error: No cuda device found")
+    sys.exit(1)
 
 
 def generate(single_prompt):
@@ -43,7 +50,7 @@ def generate(single_prompt):
         .to(torch.int16)
         .cpu()
     )
-    torchaudio.save(f"Outputs/{single_prompt}.wav", output, SAMPLE_RATE)
+    torchaudio.save(f"{OUTPUTS_FOLDER}/{single_prompt}.wav", output, SAMPLE_RATE)
 
 
 # Execution block

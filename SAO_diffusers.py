@@ -1,5 +1,6 @@
 # Imports
 import json
+import os
 import sys
 
 import soundfile as sf
@@ -8,10 +9,16 @@ from diffusers import StableAudioPipeline
 
 # Setup
 PROMPTFILE = sys.argv[1]
+OUTPUTS_FOLDER = os.environ.get("SAO_OUTPUTS_FOLDER")
 PIPE = StableAudioPipeline.from_pretrained(
     "stabilityai/stable-audio-open-1.0", torch_dtype=torch.float16
 )
-SAO = PIPE.to("cuda")
+
+try:
+    SAO = PIPE.to("cuda")
+except:
+    print("Error: No cuda device found")
+    sys.exit(1)
 
 # set the seed for generator
 GENERATOR = torch.Generator("cuda").manual_seed(0)
@@ -30,7 +37,7 @@ def generate(prompt, negative_prompt):
     ).audios
 
     output = audio[0].T.float().cpu().numpy()
-    sf.write(f"Outputs/{prompt}.wav", output, SAO.vae.sampling_rate)
+    sf.write(f"{OUTPUTS_FOLDER}/{prompt}.wav", output, SAO.vae.sampling_rate)
 
 
 # Execution block
