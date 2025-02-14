@@ -15,8 +15,8 @@ pip install huggingface-hub
 # Download some useful files
 mkdir -p "${WORKSPACE}/SAO/outputs"
 export SAO_OUTPUTS_FOLDER="${WORKSPACE}/SAO/outputs"
-wget -P "${WORKSPACE}/SAO" "https://github.com/djared750/SAO_Vast/blob/main/SAO_diffusers.py"
-wget -P "${WORKSPACE}/SAO" "https://github.com/djared750/SAO_Vast/blob/main/SAO_stableAudioTools.py"
+wget -P "${WORKSPACE}/SAO" "https://raw.githubusercontent.com/djared750/SAO_Vast/refs/heads/main/SAO_stableAudioTools.py"
+wget -P "${WORKSPACE}/SAO" "https://raw.githubusercontent.com/djared750/SAO_Vast/refs/heads/main/SAO_diffusers.py"
 
 # Reload Supervisor
 supervisorctl reload
